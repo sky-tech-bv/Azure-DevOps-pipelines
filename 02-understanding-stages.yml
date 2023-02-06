@@ -10,7 +10,7 @@ stages:
   - job: FirstJob
     steps:
     - bash: echo Build FirstJob
-    - bash: echo $(PipelineLevelVaria
+    - bash: echo $(PipelineLevelVaria)
     - bash: echo $(Build.BuildNumber)
     - bash: echo $(Build.BuildId)
     - bash: echo $(Build.SourceBranchName)
