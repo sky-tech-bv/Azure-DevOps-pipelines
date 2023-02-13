@@ -26,28 +26,28 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
-  version                = "~> 3.78"
+  version                = "~> 1.9"
 }
 
 module "skytechbv-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "skytechbv-cluster"
-  cluster_version = "1.24"
-  subnet_ids      = ["subnet-0ef0d5508555e7946", "subnet-0cb15d0898267c776"] #CHANGE
+  cluster_version = "1.14"
+  subnets         = ["subnet-0ef0d5508555e7946", "subnet-0cb15d0898267c776"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
   vpc_id          = aws_default_vpc.default.id
 
   #vpc_id         = "vpc-0d098073d3eb2d578"
 
-    eks_managed_node_groups = {
-    green = {
-      min_size     = 3
-      max_size     = 5
-      desired_size = 3
+    node_groups = [
+      {
+        min_capacity     = 3
+        max_capacity     = 5
+        desired_capacity = 3
 
-      instance_types = ["t2.micro"]
+        instance_type = "t2.micro"
     }
-  }
+    ]
 }
 
 data "aws_eks_cluster" "cluster" {
