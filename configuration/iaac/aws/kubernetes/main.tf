@@ -18,45 +18,45 @@ resource "aws_default_vpc" "default" {
 
 }
 
-data "aws_subnet_ids" "subnets" {
-  vpc_id = aws_default_vpc.default.id
-}
+# data "aws_subnet_ids" "subnets" {
+#   vpc_id = aws_default_vpc.default.id
+# }
 
-provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
-  version                = "~> 2.10"
-}
+# provider "kubernetes" {
+#   host                   = data.aws_eks_cluster.cluster.endpoint
+#   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+#   token                  = data.aws_eks_cluster_auth.cluster.token
+#   version                = "~> 2.10"
+# }
 
 module "skytechbv-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "skytechbv-cluster"
-  cluster_version = "1.14"
-  subnets         = ["subnet-0ef0d5508555e7946", "subnet-0cb15d0898267c776"] #CHANGE
+  cluster_version = "1.24"
+  aws_subnet_ids         = ["subnet-0ef0d5508555e7946", "subnet-0cb15d0898267c776"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
   vpc_id          = aws_default_vpc.default.id
 
   #vpc_id         = "vpc-0d098073d3eb2d578"
 
-    node_groups = [
+    eks_managed_node_groups = {
       {
-        min_capacity     = 3
-        max_capacity     = 5
-        desired_capacity = 3
+        min_size     = 3
+        max_size     = 5
+        desired_size = 3
 
         instance_type = "t2.micro"
+      }
     }
-    ]
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.skytechbv-cluster.cluster_id
-}
+# data "aws_eks_cluster" "cluster" {
+#   name = module.skytechbv-cluster.cluster_id
+# }
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.skytechbv-cluster.cluster_id
-}
+# data "aws_eks_cluster_auth" "cluster" {
+#   name = module.skytechbv-cluster.cluster_id
+# }
 
 
 # We will use ServiceAccount to connect to K8S Cluster in CI/CD mode
