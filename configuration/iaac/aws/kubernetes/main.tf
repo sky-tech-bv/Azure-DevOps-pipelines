@@ -38,7 +38,7 @@ module "skytechbv-cluster" {
   vpc_id          = aws_default_vpc.default.id
 
   #vpc_id         = "vpc-0d098073d3eb2d578"
-  
+
     eks_managed_node_groups = {
     blue = {}
     green = {
@@ -52,11 +52,11 @@ module "skytechbv-cluster" {
 }
 
 data "aws_eks_cluster" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
+  name = module.skytechbv-cluster.cluster_id
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.in28minutes-cluster.cluster_id
+  name = module.skytechbv-cluster.cluster_id
 }
 
 
