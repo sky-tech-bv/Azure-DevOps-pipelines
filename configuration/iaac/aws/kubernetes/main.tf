@@ -29,9 +29,9 @@ provider "kubernetes" {
   version                = "~> 2.10"
 }
 
-module "skytechbv-cluster" {
+module "skytechbv-cluster1" {
   source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = "skytechbv-cluster"
+  cluster_name    = "skytechbv-cluster1"
   cluster_version = "1.24"
   subnet_ids         = ["subnet-0ef0d5508555e7946", "subnet-0cb15d0898267c776"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
@@ -51,11 +51,11 @@ module "skytechbv-cluster" {
 }
 
 data "aws_eks_cluster" "cluster" {
-  name = module.skytechbv-cluster.cluster_id
+  name = module.skytechbv-cluster1.cluster_id
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.skytechbv-cluster.cluster_id
+  name = module.skytechbv-cluster1.cluster_id
 }
 
 
