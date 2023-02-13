@@ -40,7 +40,6 @@ module "skytechbv-cluster" {
   #vpc_id         = "vpc-0d098073d3eb2d578"
 
     eks_managed_node_groups = {
-    blue = {}
     green = {
       min_size     = 3
       max_size     = 5
