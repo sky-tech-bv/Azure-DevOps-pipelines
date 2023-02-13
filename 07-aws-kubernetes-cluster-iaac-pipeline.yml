@@ -2,23 +2,28 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-- task: TerraformTaskV3@3
+- task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes/'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes'
     backendServiceAWS: 'aws for terraform connection'
     backendAWSBucketName: 'terraform-backend-state-skydev-123'
     backendAWSKey: 'kubernetes-dev.tfstate'
-- task: TerraformTaskV3@3
+- task: TerraformTaskV1@0
   inputs:
     provider: 'aws'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes/'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes'
     environmentServiceNameAWS: 'aws for terraform connection'
-
+# - task: TerraformTaskV1@0
+#   inputs:
+#     provider: 'aws'
+#     command: 'destroy'
+#     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes'
+#     environmentServiceNameAWS: 'aws-for-terraform'
