@@ -3,7 +3,8 @@
 # Uses default VPC and Subnet. Create Your Own VPC and Private Subnets for Prod Usage.
 # terraform-backend-state-in28minutes-123
 # AKIA4AHVNOD7OOO6T4KI
-
+# s3: terraform-backend-state-skydev-123
+# Access key id: AKIAZKDNCVSWUON7DOHN
 
 terraform {
   backend "s3" {
@@ -28,24 +29,26 @@ provider "kubernetes" {
   version                = "~> 2.12"
 }
 
-module "in28minutes-cluster" {
+module "skytechbv-cluster" {
   source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = "in28minutes-cluster"
-  cluster_version = "1.14"
-  subnets         = ["subnet-3f7b2563", "subnet-4a7d6a45"] #CHANGE
+  cluster_name    = "skytechbv-cluster"
+  cluster_version = "1.24"
+  subnet_ids      = ["subnet-02060f41fa8ca5b8d", "subnet-0bedf9c6414dd6599"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
   vpc_id          = aws_default_vpc.default.id
 
-  #vpc_id         = "vpc-1234556abcdef"
+  #vpc_id         = "vpc-0d098073d3eb2d578"
+  
+    eks_managed_node_groups = {
+    blue = {}
+    green = {
+      min_size     = 3
+      max_size     = 5
+      desired_size = 3
 
-  node_groups = [
-    {
-      instance_type = "t2.micro"
-      max_capacity  = 5
-      desired_capacity = 3
-      min_capacity  = 3
+      instance_types = ["t2.micro"]
     }
-  ]
+  }
 }
 
 data "aws_eks_cluster" "cluster" {
