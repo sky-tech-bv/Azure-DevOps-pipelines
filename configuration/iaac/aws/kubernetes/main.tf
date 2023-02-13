@@ -50,13 +50,13 @@ module "skytechbv-cluster" {
     }
 }
 
-# data "aws_eks_cluster" "cluster" {
-#   name = module.skytechbv-cluster.cluster_id
-# }
+data "aws_eks_cluster" "cluster" {
+  name = module.skytechbv-cluster.cluster_id
+}
 
-# data "aws_eks_cluster_auth" "cluster" {
-#   name = module.skytechbv-cluster.cluster_id
-# }
+data "aws_eks_cluster_auth" "cluster" {
+  name = module.skytechbv-cluster.cluster_id
+}
 
 
 # We will use ServiceAccount to connect to K8S Cluster in CI/CD mode
