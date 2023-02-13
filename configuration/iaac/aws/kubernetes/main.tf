@@ -33,7 +33,7 @@ module "skytechbv-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "skytechbv-cluster"
   cluster_version = "1.24"
-  aws_subnet_ids         = ["subnet-0ef0d5508555e7946", "subnet-0cb15d0898267c776"] #CHANGE
+  subnet_ids         = ["subnet-0ef0d5508555e7946", "subnet-0cb15d0898267c776"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
   vpc_id          = aws_default_vpc.default.id
 
