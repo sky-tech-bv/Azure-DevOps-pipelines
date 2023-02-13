@@ -23,9 +23,9 @@ data "aws_subnet_ids" "subnets" {
 }
 
 provider "kubernetes" {
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority[0].data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
+  host                   = data.aws_eks_cluster.cluster-test.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster-test.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.cluster-test.token
   # version                = "~> 2.10"
 }
 
@@ -50,12 +50,12 @@ module "skytechbv-cluster1" {
     }
 }
 
-data "aws_eks_cluster" "cluster" {
-  name = module.skytechbv-cluster1.cluster_name
+data "aws_eks_cluster" "cluster-test" {
+  name = module.skytechbv-cluster1.cluster_id
 }
 
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.skytechbv-cluster1.cluster_name
+data "aws_eks_cluster_auth" "cluster-test" {
+  name = module.skytechbv-cluster1.cluster_id
 }
 
 
