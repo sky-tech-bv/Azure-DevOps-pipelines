@@ -69,7 +69,7 @@ data "aws_eks_cluster_auth" "skytechbv-cluster-test1" {
 # and services in default namespace
 resource "kubernetes_cluster_role_binding" "example" {
   metadata {
-    name = "fabric8-rbac"
+    name = "fabric8-rbac1"
   }
   role_ref {
     api_group = "rbac.authorization.k8s.io"
@@ -79,7 +79,7 @@ resource "kubernetes_cluster_role_binding" "example" {
   subject {
     kind      = "ServiceAccount"
     name      = "default"
-    namespace = "default"
+    namespace = "kube-system"
   }
 }
 
