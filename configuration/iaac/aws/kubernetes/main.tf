@@ -35,9 +35,9 @@ data "aws_subnet_ids" "subnets" {
 #   # version                = "~> 2.10"
 # }
 
-module "skytechbv-cluster" {
+module "skytechbv-cluster-test1" {
   source          = "terraform-aws-modules/eks/aws"
-  cluster_name    = "skytechbv-cluster"
+  cluster_name    = "skytechbv-cluster-test1"
   cluster_version = "1.24"
   subnet_ids         = ["subnet-0ef0d5508555e7946", "subnet-0cb15d0898267c776"] #CHANGE
   # subnets = data.aws_subnet_ids.subnets.ids
