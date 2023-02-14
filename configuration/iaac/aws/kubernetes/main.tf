@@ -28,12 +28,11 @@ data "aws_subnet_ids" "subnets" {
   vpc_id = aws_default_vpc.default.id
 }
 
-# provider "kubernetes" {
-#   host                   = data.aws_eks_cluster.skytechbv-cluster.endpoint
-#   cluster_ca_certificate = base64decode(data.aws_eks_cluster.skytechbv-cluster.certificate_authority[0].data)
-#   token                  = data.aws_eks_cluster_auth.skytechbv-cluster.token
-#   # version                = "~> 2.10"
-# }
+provider "kubernetes" {
+  host                   = data.aws_eks_cluster.skytechbv-cluster.endpoint
+  cluster_ca_certificate = base64decode(data.aws_eks_cluster.skytechbv-cluster.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.skytechbv-cluster.token
+}
 
 module "skytechbv-cluster-test1" {
   source          = "terraform-aws-modules/eks/aws"
@@ -56,13 +55,13 @@ module "skytechbv-cluster-test1" {
     }
 }
 
-# data "aws_eks_cluster" "skytechbv-cluster" {
-#   name = "skytechbv-cluster"
-# }
+data "aws_eks_cluster" "skytechbv-cluster" {
+  name = "skytechbv-cluster"
+}
 
-# data "aws_eks_cluster_auth" "skytechbv-cluster" {
-#   name = "skytechbv-cluster"
-# }
+data "aws_eks_cluster_auth" "skytechbv-cluster" {
+  name = "skytechbv-cluster"
+}
 
 
 # We will use ServiceAccount to connect to K8S Cluster in CI/CD mode
