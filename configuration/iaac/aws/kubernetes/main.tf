@@ -57,11 +57,11 @@ module "skytechbv-cluster" {
 }
 
 data "aws_eks_cluster" "skytechbv-cluster" {
-  name = module.skytechbv-cluster.cluster_name
+  name = "skytechbv-cluster"
 }
 
 data "aws_eks_cluster_auth" "skytechbv-cluster" {
-  name = module.skytechbv-cluster.cluster_name
+  name = "skytechbv-cluster"
 }
 
 
